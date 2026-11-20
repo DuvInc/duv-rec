@@ -1,0 +1,18 @@
+name: Feature request
+description: Something this recorder should be able to do and cannot.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What you are trying to record
+      description: The situation, not the solution.
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: This is about capturing, not editing. The app has no editor on purpose.
+        - label: This does not need a dependency, or I have said why it does.

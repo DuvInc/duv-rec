@@ -1,0 +1,29 @@
+name: CI
+
+# Pull requests only get the default read-only token, and nothing here needs more. No secret is
+# referenced, and `pull_request` (never `pull_request_target`) means a fork's code cannot reach one.
+#
+# What CI does NOT do: record anything. A runner has no camera, no microphone and no screen
+# recording grant. The tests cover what needs no device: the WAV file, the cut of an audio stream
+# to the take, pauses, gap filling, settings decoding and device defaults.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+      - run: swift --version
+      - run: scripts/test.sh
+      - run: swift build -c release --product DuvRec
+      - run: bash -n scripts/install.sh && bash -n scripts/setup-signing.sh && bash -n scripts/test.sh

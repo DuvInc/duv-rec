@@ -1,0 +1,36 @@
+name: Bug report
+description: Something does not work the way this repository says it does.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you got. A take that came out wrong is the most useful kind.
+    validations:
+      required: true
+  - type: textarea
+    id: session
+    attributes:
+      label: The take's session.json
+      description: >
+        It holds the settings, the devices, the frame and sample counts and the status of the take,
+        and nothing you recorded. Never attach the .mov or .wav files of a take.
+      render: json
+  - type: input
+    id: versions
+    attributes:
+      label: Commit, macOS version, Mac model, Swift version
+    validations:
+      required: true
+  - type: input
+    id: devices
+    attributes:
+      label: Camera and microphone (make and model)
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before filing
+      options:
+        - label: My paste contains no personal data and no recorded content.
+          required: true

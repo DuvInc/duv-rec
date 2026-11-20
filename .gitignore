@@ -1,0 +1,9 @@
+# SwiftPM build output and the signed app bundle: rebuilt by scripts/install.sh.
+.build/
+dist/
+.swiftpm/
+# Takes are recorded outside the repository (~/Movies/Duv Rec by default). Never commit one.
+*.mov
+*.wav
+.claude/
+.DS_Store
