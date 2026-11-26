@@ -186,6 +186,7 @@ struct SourceTile: View {
 
 struct MainView: View {
     @EnvironmentObject var rec: Recorder
+    @ObservedObject private var light = ScreenLight.shared
     @State private var source = Source.screen
 
     var body: some View {
@@ -217,6 +218,7 @@ struct MainView: View {
         .padding(16)
         .frame(width: 480)
         .onAppear { rec.refreshDisplays(); rec.updateFreeSpace() }
+        .onChange(of: recordedDisplay) { _, now in light.avoid(now) }
     }
 
     // MARK: Tiles
@@ -255,6 +257,34 @@ struct MainView: View {
 
     private var screenPanel: some View {
         VStack(alignment: .leading, spacing: 10) {
+            screenSettings
+                .disabled(!rec.settings.screenOn)
+                .opacity(rec.settings.screenOn ? 1 : 0.5)
+            Divider()
+            lightRow
+        }
+    }
+
+    /// The display being recorded, which the light must never cover.
+    private var recordedDisplay: CGDirectDisplayID? {
+        guard rec.settings.screenOn else { return nil }
+        return rec.settings.screenMode == .region ? rec.settings.regionDisplayID : rec.settings.displayID
+    }
+
+    /// Works with the Screen source off too: a camera-only take is when a fill light helps most.
+    private var lightRow: some View {
+        let target = light.display.flatMap { id in NSScreen.screens.first { displayID(of: $0) == id } }
+            ?? ScreenLight.target(avoiding: recordedDisplay)
+        return Toggle(isOn: Binding(get: { light.isOn }, set: { _ in light.toggle(avoiding: recordedDisplay) })) {
+            Label(target.map { "Screen light · \($0.localizedName)" } ?? "Screen light", systemImage: light.isOn ? "lightbulb.fill" : "lightbulb")
+        }
+        .toggleStyle(.button)
+        .disabled(target == nil)
+        .help(target == nil ? "Needs a second display" : "Turns that display plain white. Click the white to turn it off.")
+    }
+
+    private var screenSettings: some View {
+        VStack(alignment: .leading, spacing: 10) {
             Picker("", selection: $rec.settings.screenMode) {
                 Text("Full screen").tag(ScreenMode.display)
                 Text("Area").tag(ScreenMode.region)
@@ -292,8 +322,6 @@ struct MainView: View {
                 .frame(width: 130)
             }
         }
-        .disabled(!rec.settings.screenOn)
-        .opacity(rec.settings.screenOn ? 1 : 0.5)
     }
 
     private var cameraPanel: some View {

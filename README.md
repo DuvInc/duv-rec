@@ -58,7 +58,7 @@ Without `setup-signing.sh`, the build is signed ad hoc, which macOS treats as a 
 ## A take
 
 1. **Three tiles, one per source: Screen, Camera, Sound.** The dot on a tile turns that source on or off (a take can be camera and voice only). Clicking a tile shows its settings below.
-   - **Screen**: a whole display (without the menu bar if you want) or an **area** you draw: drag the corners and edges, move it from inside, Return to confirm. During the take a thin red frame surrounds the area, outside the recorded picture. Pointer, visible clicks (macOS 15), 30 or 60 fps.
+   - **Screen**: a whole display (without the menu bar if you want) or an **area** you draw: drag the corners and edges, move it from inside, Return to confirm. During the take a thin red frame surrounds the area, outside the recorded picture. Pointer, visible clicks (macOS 15), 30 or 60 fps. **Screen light** turns a second display plain white, a fill light for your face: never the recorded display, an external one first, and it works with the Screen source off. Click the white to turn it off.
    - **Camera**: preview, device, 4K or 1080p.
    - **Sound**: the microphone with its level meter (aim for peaks between −18 and −6 dB), and the Mac's sound as a separate track.
    - **Footer**: the take folder (`~/Movies/Duv Rec` by default), the free space, and the quality: Standard, High or Maximum.

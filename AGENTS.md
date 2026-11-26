@@ -13,6 +13,7 @@ Duv Rec is a macOS app (SwiftUI + AppKit, SwiftPM, no Xcode project) that record
 | `Sources/DuvRec/Capture.swift` | `ScreenCapture` (ScreenCaptureKit: screen and the Mac's sound), `CaptureRig` (AVFoundation: camera and microphone in one session), device defaults |
 | `Sources/DuvRec/Session.swift` | `RecSettings` (persisted in user defaults), `Quality`, `RecordingSession` (one take: the `[T0, T1]` window, pauses, `session.json`) |
 | `Sources/DuvRec/Writers.swift` | `VideoTrackWriter` (HEVC `.mov`, fragmented), `WavWriter` (float32 WAV), `AudioTrack` (cut to the take, pauses, gap filling) |
+| `Sources/DuvRec/ScreenLight.swift` | the screen light: a second display turned plain white as a fill light, never the recorded one |
 | `Sources/DuvRec/RegionPicker.swift` | the area picker overlay and the red frame shown around the area during a take |
 | `Tests/DuvRecTests/` | Swift Testing. `Support.swift` is the only test file that imports Foundation (see rule 6) |
 | `scripts/` | `install.sh` (build, sign, install, relaunch), `setup-signing.sh` (local identity, once), `test.sh` |
